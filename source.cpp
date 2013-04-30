@@ -1,39 +1,36 @@
 #include "source.h"
 #include "linplatform.h"
 
-void construct(char ***&arg)
+Source::Source(short x, short y):
+p(0), l(x), m(y)
 {
-    arg=new char** [L];
-    for (short i=0; i<L; ++i)
+    p=new char** [l];
+    for (short i=0; i<l; ++i)
     {
-        arg[i]=new char* [M];
-        for (short j=0; j<M; ++j)
-            if (i==0||i==L-1||j==0||j==M-1)
-                arg[i][j]="\342\226\222";
+        p[i]=new char* [m];
+        for (short j=0; j<m; ++j)
+            if (i==0||i==l-1||j==0||j==m-1)
+                p[i][j]="\342\226\222";
             else
-                arg[i][j]=" ";
+                p[i][j]=" ";
     }
 }
 
-void clear(char ***&arg, Block *f)
+Source::~Source()
 {
-    short x=f->GetX();
-    short y=f->GetY();
-    short a=f->GetA();
-    short b=f->GetB();
-    for (short i=x; i<x+a; ++i)
-        for (short j=y; j<y+b; ++j)
-            arg[i][j]=" ";
+    for (short i=0; i<l; ++i)
+        delete [] p[i];
+    delete [] p;
 }
 
-void draw (char ***&arg)
+void Source::Draw()
 {
-    for (short i=0; i<L; ++i)
+    for (short i=0; i<l; ++i)
     {
-        for (short j=0; j<M; ++j)
+        for (short j=0; j<m; ++j)
         {
-            std::cout<<arg[i][j];
-            if (i==0||i==L-1||j==0||j==M-1)
+            std::cout<<p[i][j];
+            if (i==0||i==l-1||j==0||j==m-1)
                 std::cout<<"\342\226\222";
             else
                 std::cout<<" ";
@@ -42,45 +39,54 @@ void draw (char ***&arg)
     }
 }
 
-bool game(char ***&arg)
+bool Source::Game()
 {
-    for (short i=1; i<M-1; ++i)
-        if (arg[1][i]==blockIcon)
+    for (short i=1; i<m-1; ++i)
+        if (p[1][i]!=" ")
             return false;
     return true;
 }
 
-void line(char ***&arg)
+void Source::Line()
 {
-    for (short i1=L-2; i1>0; --i1)
-        for (short i2=1; i2<M-1; ++i2)
+    for (short i1=l-2; i1>0; --i1)
+        for (short i2=1; i2<m-1; ++i2)
         {
-            if (arg[i1][i2]==" ")
+            if (p[i1][i2]==" ")
                 break;
-            if (i2==M-2)
+            if (i2==m-2)
             {
-                for (short i3=1;i3<M-1;++i3)
+                for (short i3=1;i3<m-1;++i3)
                 {
-                    arg[i1][i3]=" ";
+                    p[i1][i3]=" ";
                     nap(25);
                     clearScreen();
-                    draw(arg);
+                    Draw();
                 }
                 for (short i4=i1; i4>0; --i4)
-                    for (short i5=1; i5<M-1; ++i5)
+                    for (short i5=1; i5<m-1; ++i5)
                     if (i4==1)
-                        arg[1][i5]=" ";
+                        p[1][i5]=" ";
                     else
-                        arg[i4][i5]=arg[i4-1][i5];
+                        p[i4][i5]=p[i4-1][i5];
 
                 i1++;
             }
         }
 }
 
-void destruct(char ***&arg)
+short Source::GetL()
 {
-    for (short i=0; i<L; ++i)
-        delete [] arg[i];
-    delete [] arg;
+    return l;
+}
+
+short Source::GetM()
+{
+    return m;
+}
+
+char*** Source::GetP()
+{
+    char ***p1=p;
+    return p1;
 }

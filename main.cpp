@@ -6,21 +6,21 @@ using namespace std;
 
 int main()
 {
-    char ***field=0;
-    construct(field);
+    Source f(20, 14);
+    Source *field=&f;
     char choice='s';
-    while(game(field))
+    while(field->Game())
     {
-        Square sqr(1,M/2-1);
+        Square sqr(1,14/2-1);
         Block *figure=&sqr;
         while(true)
         {
             figure->Enter(field);
             clearScreen();
-            draw(field);
+            field->Draw();
             if (figure->StopDown(field))
                 break;
-            clear(field, figure);
+            figure->Clear(field);
             if(kbhit())
                 choice=getch();
             switch (choice)
@@ -50,9 +50,8 @@ int main()
                 break;
             }
         }
-        line(field);
+        field->Line();
         choice='s';
     }
-    destruct(field);
     return 0;
 }

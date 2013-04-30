@@ -1,6 +1,10 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include "source.h"
+
+class Source;
+
 class Block
 {
 protected:
@@ -12,33 +16,19 @@ protected:
     }coords;
 public:
 
-    Block(short arg, short brg):
-    a(arg), b(brg), ptr(0)
-    {
-        coords.x=0;
-        coords.y=0;
-    }
-
-    ~Block()
-    {
-        a=0;
-        b=0;
-        ptr=0;
-    }
-
+    Block(short, short);
+    ~Block();
     virtual void Rotate()=0;
-    virtual bool StopDown(char ***&)=0;
-    virtual bool StopLeft(char ***&)=0;
-    virtual bool StopRight(char ***&)=0;
+    virtual bool StopDown(Source *)=0;
+    virtual bool StopLeft(Source *)=0;
+    virtual bool StopRight(Source *)=0;
     void MoveRight();
     void MoveLeft();
     void MoveDown();
-    void Enter(char ***arg);
-    short GetX();
-    short GetY();
-    short GetA();
-    short GetB();
-
+    void Enter(Source *);
+    void Clear(Source *);
 };
 
 #endif
+
+

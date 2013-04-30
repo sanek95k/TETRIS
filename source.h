@@ -5,16 +5,28 @@
 #include <iostream>
 #include <string.h>
 
-const short L=20, M=14;
-const std::string blockIcon="\356\202\252", borderIcon="\342\226\222";
+class Source
+{
+    char ***p;
+    short l, m;
 
-void construct(char ***&);
-void clear(char ***&, Block *);
-void draw(char ***&);
-void destruct(char ***&);
-bool game(char ***&);
-void line(char ***&);
+public:
+    Source():
+    p(0), l(0), m(0)
+    {
+    }
+    Source(short, short);
+    ~Source();
 
+    friend class Block;
+    friend class Square;
 
+    void Draw();
+    bool Game();
+    void Line();
+    short GetL();
+    short GetM();
+    char*** GetP();
+};
 
 #endif
