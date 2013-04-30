@@ -32,15 +32,17 @@ void Block::MoveDown()
 
 void Block::Enter(Source *arg)
 {
+    char ***p=arg->GetP();
     for (short i=0; i<a; ++i)
         for (short j=0; j<b; ++j)
-            arg->p[coords.x+i][coords.y+j]=ptr[i][j];
+            p[coords.x+i][coords.y+j]=ptr[i][j];
 
 }
 
 void Block::Clear(Source *arg)
 {
+    char ***p=arg->GetP();
     for (short i=coords.x; i<coords.x+a; ++i)
         for (short j=coords.y; j<coords.y+b; ++j)
-            arg->p[i][j]=" ";
+            p[i][j]=" ";
 }

@@ -18,9 +18,6 @@ public:
     Source(short, short);
     ~Source();
 
-    friend class Block;
-    friend class Square;
-
     void Draw();
     bool Game();
     void Line();

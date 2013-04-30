@@ -87,6 +87,6 @@ short Source::GetM()
 
 char*** Source::GetP()
 {
-    char ***p1=p;
-    return p1;
+    char ***pCopy=p;
+    return pCopy;
 }

@@ -28,25 +28,29 @@ void Square::Rotate()
 
 bool Square::StopDown(Source *arg)
 {
-    //char ***p=arg->GetP();
+    char ***p=arg->GetP();
+    short l=arg->GetL();
     for (short i=coords.y; i<coords.y+b; ++i)
-        if (arg->p[coords.x+a][i]==arg->p[arg->l-1][i]||arg->p[coords.x+a][i]=="\356\202\252")
+        if (p[coords.x+a][i]==p[l-1][i]||p[coords.x+a][i]=="\356\202\252")
             return true;
     return false;
 }
 
 bool Square::StopLeft(Source *arg)
 {
+    char ***p=arg->GetP();
     for (short i=coords.x; i<coords.x+a; ++i)
-    if (coords.y-1==0||arg->p[i][coords.y-1]=="\356\202\252")
+    if (coords.y-1==0||p[i][coords.y-1]=="\356\202\252")
         return true;
     return false;
 }
 
 bool Square::StopRight(Source *arg)
 {
+    char ***p=arg->GetP();
+    short m=arg->GetM();
     for (short i=coords.x; i<coords.x+a; ++i)
-    if (coords.y+a==arg->m-1||arg->p[i][coords.y+a]=="\356\202\252")
+    if (coords.y+a==m-1||p[i][coords.y+a]=="\356\202\252")
         return true;
     return false;
 }
