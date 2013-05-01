@@ -24,8 +24,14 @@ Line::~Line()
 void Line::Rotate(Field *arg)
 {
     short m=arg->GetM();
-    if (coords.y+startB>=m)
+    short l=arg->GetL();
+    char ***p=arg->GetP();
+    if (coords.x+a>=l-1||coords.y+a>=m)
         return;
+    for (short i=0; i<a; ++i)
+        if (p[coords.x][coords.y+i+a]=="\356\202\252"
+            ||p[coords.x+i+a][coords.y]=="\356\202\252")
+            return;
     short temp=a;
     a=b;
     b=temp;

@@ -28,7 +28,7 @@ int main()
     cout<<"Начинаем игру...\n";
     nap(1000);
     srand(time(0));
-    short score=0;
+    short score=0, bestScore=0;
     bool exit=false;
     Block *figure[2];
     Field matrix(height, width);
@@ -54,8 +54,8 @@ int main()
             switch (choice)
             {
             case 1:
-                nap(pause);
                 figure[whatFig]->MoveDown();
+                nap(pause);
                 break;
             case 'd':
                 if (!figure[whatFig]->StopRight(field))
@@ -84,8 +84,13 @@ int main()
             }
         }
         choice=1;
-        score+=field->MinusLine();
+        short temp=field->MinusLine();
+        if (temp>bestScore)
+            bestScore=temp;
+        score+=temp;
     }
-    cout<<"\nИтог: "<<score<<" линий\n";
+    cout<<"\n Итоги:\n";
+    cout<<"Всего "<<score<<" линий\n";
+    cout<<"Наибольшее число линий за один раз "<<bestScore<<" линий\n";
     return 0;
 }
