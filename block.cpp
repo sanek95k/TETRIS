@@ -18,6 +18,10 @@ Block::~Block()
     ptr=0;
 }
 
+void Block::Rotate(Field *arg)
+{
+}
+
 void Block::MoveRight()
 {
     coords.y++;

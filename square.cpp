@@ -21,10 +21,6 @@ Square::~Square()
     delete [] ptr;
 }
 
-void Square::Rotate()
-{
-}
-
 bool Square::StopDown(Field *arg)
 {
     char ***p=arg->GetP();

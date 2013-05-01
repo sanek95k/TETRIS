@@ -21,8 +21,11 @@ Line::~Line()
     delete [] ptr;
 }
 
-void Line::Rotate()
+void Line::Rotate(Field *arg)
 {
+    short m=arg->GetM();
+    if (coords.y+startB>=m)
+        return;
     short temp=a;
     a=b;
     b=temp;

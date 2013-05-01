@@ -25,7 +25,7 @@ int main()
     int pause;
     cin>>pause;
     pause=1000/pause;
-    cout<<"Начинаем игру\n";
+    cout<<"Начинаем игру...\n";
     nap(1000);
     srand(time(0));
     short score=0;
@@ -72,7 +72,7 @@ int main()
                 figure[whatFig]->MoveDown();
                 break;
             case 'r':
-                figure[whatFig]->Rotate();
+                figure[whatFig]->Rotate(field);
                 choice=1;
                 break;
             case 'x':

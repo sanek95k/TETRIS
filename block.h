@@ -19,7 +19,7 @@ public:
     Block(short, short);
     ~Block();
 
-    virtual void Rotate()=0;
+    virtual void Rotate(Field *);
     virtual bool StopDown(Field *)=0;
     virtual bool StopLeft(Field *)=0;
     virtual bool StopRight(Field *)=0;
