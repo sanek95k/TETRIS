@@ -1,14 +1,14 @@
-#ifndef SQUARE_H
-#define SQUARE_H
+#ifndef LINE_H
+#define LINE_H
 
 #include "block.h"
 #include "field.h"
 
-class Square: public Block
+class Line: public Block
 {
 public:
-    Square(short, short);
-    ~Square();
+    Line(short, short);
+    ~Line();
 
     void Rotate();
     bool StopDown(Field *);

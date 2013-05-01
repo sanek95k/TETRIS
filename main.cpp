@@ -1,57 +1,91 @@
+#include "field.h"
 #include "square.h"
+#include "line.h"
 #include "source.h"
-#include "linplatform.h"
+#include "cstdlib"
+#include <iostream>
 
 using namespace std;
 
 int main()
 {
-    Source f(20, 14);
-    Source *field=&f;
-    char choice='s';
-    while(field->Game())
+    cout<<" Консольный тетрис (пока что недотетрис), БЕЗ защиты от глупостей\n";
+    cout<<"Управление фигурой:\n'a' - влево\n'd' - вправо\n";
+    cout<<"'s' - быстро вниз\n'r' - повернуть\n'x' - выход\n\n";
+    cout<<" Настройки игры\n";
+    cout<<"Высота  поля: \n";
+    short height;
+    cin>>height;
+    height+=2;
+    cout<<"Ширина поля: \n";
+    short width;
+    cin>>width;
+    width+=2;
+    cout<<"Скорость фигур (шагов в секунду): \n";
+    int pause;
+    cin>>pause;
+    pause=1000/pause;
+    cout<<"Начинаем игру\n";
+    nap(1000);
+    srand(time(0));
+    short score=0;
+    bool exit=false;
+    Block *figure[2];
+    Field matrix(height, width);
+    Field *field=&matrix;
+    char choice=1;
+    while(field->Game()&&!exit)
     {
-        Square sqr(1,14/2-1);
-        Block *figure=&sqr;
-        while(true)
+        Square sqr(1,width/2-1);
+        Line ln(1,width/2-1);
+        figure[0]=&sqr;
+        figure[1]=&ln;
+        short whatFig=rand()%2;
+        while(!exit)
         {
-            figure->Enter(field);
+            figure[whatFig]->Enter(field);
             clearScreen();
             field->Draw();
-            if (figure->StopDown(field))
+            if (figure[whatFig]->StopDown(field))
                 break;
-            figure->Clear(field);
+            figure[whatFig]->Clear(field);
             if(kbhit())
                 choice=getch();
             switch (choice)
             {
-            case 's':
-                nap(500);
-                figure->MoveDown();
+            case 1:
+                nap(pause);
+                figure[whatFig]->MoveDown();
                 break;
             case 'd':
-                if (!figure->StopRight(field))
-                    figure->MoveRight();
-                choice='s';
+                if (!figure[whatFig]->StopRight(field))
+                    figure[whatFig]->MoveRight();
+                choice=1;
                 break;
             case 'a':
-                if (!figure->StopLeft(field))
-                    figure->MoveLeft();
-                choice='s';
+                if (!figure[whatFig]->StopLeft(field))
+                    figure[whatFig]->MoveLeft();
+                choice=1;
                 break;
-            case 'q':
-                nap(10);
-                figure->MoveDown();
+            case 's':
+                nap(pause/50);
+                figure[whatFig]->MoveDown();
+                break;
+            case 'r':
+                figure[whatFig]->Rotate();
+                choice=1;
                 break;
             case 'x':
-                return 0;
+                exit=true;
+                break;
             default:
-                choice='s';
+                choice=1;
                 break;
             }
         }
-        field->Line();
-        choice='s';
+        choice=1;
+        score+=field->MinusLine();
     }
+    cout<<"\nИтог: "<<score<<" линий\n";
     return 0;
 }

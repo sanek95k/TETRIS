@@ -1,7 +1,7 @@
-#include "square.h"
+#include "line.h"
 
-Square::Square(short x, short y):
-Block(2,2)
+Line::Line(short x, short y):
+Block(1,4)
 {
     ptr=new char** [startA];
     for (short i=0; i<startA; ++i)
@@ -14,18 +14,21 @@ Block(2,2)
     coords.y=y;
 
 }
-Square::~Square()
+Line::~Line()
 {
     for (short i=0; i<startA; ++i)
         delete [] ptr[i];
     delete [] ptr;
 }
 
-void Square::Rotate()
+void Line::Rotate()
 {
+    short temp=a;
+    a=b;
+    b=temp;
 }
 
-bool Square::StopDown(Field *arg)
+bool Line::StopDown(Field *arg)
 {
     char ***p=arg->GetP();
     short l=arg->GetL();
@@ -35,7 +38,7 @@ bool Square::StopDown(Field *arg)
     return false;
 }
 
-bool Square::StopLeft(Field *arg)
+bool Line::StopLeft(Field *arg)
 {
     char ***p=arg->GetP();
     for (short i=coords.x; i<coords.x+a; ++i)
@@ -44,7 +47,7 @@ bool Square::StopLeft(Field *arg)
     return false;
 }
 
-bool Square::StopRight(Field *arg)
+bool Line::StopRight(Field *arg)
 {
     char ***p=arg->GetP();
     short m=arg->GetM();

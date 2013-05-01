@@ -1,14 +1,14 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include "source.h"
+#include "field.h"
 
-class Source;
+class Field;
 
 class Block
 {
 protected:
-    short a, b;
+    short startA, startB, a, b;
     char ***ptr;
     struct
     {
@@ -18,15 +18,16 @@ public:
 
     Block(short, short);
     ~Block();
+
     virtual void Rotate()=0;
-    virtual bool StopDown(Source *)=0;
-    virtual bool StopLeft(Source *)=0;
-    virtual bool StopRight(Source *)=0;
+    virtual bool StopDown(Field *)=0;
+    virtual bool StopLeft(Field *)=0;
+    virtual bool StopRight(Field *)=0;
     void MoveRight();
     void MoveLeft();
     void MoveDown();
-    void Enter(Source *);
-    void Clear(Source *);
+    void Enter(Field *);
+    void Clear(Field *);
 };
 
 #endif
