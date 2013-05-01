@@ -17,7 +17,7 @@ protected:
 public:
 
     Block(short, short);
-    ~Block();
+    virtual ~Block();
 
     virtual void Rotate(Field *);
     virtual bool StopDown(Field *)=0;
