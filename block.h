@@ -9,20 +9,19 @@ class Block
 {
 protected:
     short startA, startB, a, b;
-    char ***ptr;
+    short **ptr;
     struct
     {
         short x, y;
-    }coords;
+    } coords;
 public:
-
     Block(short, short);
     virtual ~Block();
 
     virtual void Rotate(Field *);
-    virtual bool StopDown(Field *)=0;
-    virtual bool StopLeft(Field *)=0;
-    virtual bool StopRight(Field *)=0;
+    virtual bool StopDown(Field *);
+    virtual bool StopLeft(Field *);
+    virtual bool StopRight(Field *);
     void MoveRight();
     void MoveLeft();
     void MoveDown();
@@ -31,5 +30,3 @@ public:
 };
 
 #endif
-
-

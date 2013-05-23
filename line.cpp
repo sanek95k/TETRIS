@@ -1,14 +1,14 @@
 #include "line.h"
 
 Line::Line(short x, short y):
-Block(1,4)
+    Block(1,4)
 {
-    ptr=new char** [startA];
+    ptr=new short* [startA];
     for (short i=0; i<startA; ++i)
     {
-        ptr[i]=new char* [startB];
+        ptr[i]=new short [startB];
         for (short j=0; j<startB; ++j)
-            ptr[i][j]="\356\202\252";
+            ptr[i][j]=full;
     }
     coords.x=x;
     coords.y=y;
@@ -19,19 +19,28 @@ Line::~Line()
     for (short i=0; i<startA; ++i)
         delete [] ptr[i];
     delete [] ptr;
+    ptr=0;
 }
 
 void Line::Rotate(Field *arg)
 {
     short m=arg->GetM();
     short l=arg->GetL();
-    char ***p=arg->GetP();
+    short **p=arg->GetP();
     if (coords.x+a>=l-1||coords.y+a>=m)
         return;
-    for (short i=0; i<a; ++i)
-        if (p[coords.x][coords.y+i+a]=="\356\202\252"
-            ||p[coords.x+i+a][coords.y]=="\356\202\252")
+    if (a==startA)
+    {
+    for (short i=0; i<b; ++i)
+        if (p[coords.x+a][coords.y+i]==full)
             return;
+    }
+    else
+    {
+    for (short i=0; i<a; ++i)
+        if (p[coords.x+i][coords.y+b]==full)
+            return;
+    }
     short temp=a;
     a=b;
     b=temp;
@@ -39,29 +48,31 @@ void Line::Rotate(Field *arg)
 
 bool Line::StopDown(Field *arg)
 {
-    char ***p=arg->GetP();
-    short l=arg->GetL();
+    short **p=arg->GetP();
     for (short i=coords.y; i<coords.y+b; ++i)
-        if (p[coords.x+a][i]==p[l-1][i]||p[coords.x+a][i]=="\356\202\252")
+        if (p[coords.x+a][i]==border||p[coords.x+a][i]==full)
             return true;
     return false;
 }
 
 bool Line::StopLeft(Field *arg)
 {
-    char ***p=arg->GetP();
-    for (short i=coords.x; i<coords.x+a; ++i)
-    if (coords.y-1==0||p[i][coords.y-1]=="\356\202\252")
+    short **p=arg->GetP();
+    if (p[coords.x][coords.y-1]==border)
         return true;
+    for (short i=coords.x; i<coords.x+a; ++i)
+        if (p[i][coords.y-1]==full)
+            return true;
     return false;
 }
 
 bool Line::StopRight(Field *arg)
 {
-    char ***p=arg->GetP();
-    short m=arg->GetM();
-    for (short i=coords.x; i<coords.x+a; ++i)
-    if (coords.y+b==m-1||p[i][coords.y+b]=="\356\202\252")
+    short **p=arg->GetP();
+    if (p[coords.x][coords.y+b]==border)
         return true;
+    for (short i=coords.x; i<coords.x+a; ++i)
+        if (p[i][coords.y+b]==full)
+            return true;
     return false;
 }

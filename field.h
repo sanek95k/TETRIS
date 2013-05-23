@@ -4,25 +4,30 @@
 #include "block.h"
 #include <iostream>
 
+enum Cell
+{
+    empty, full, border
+};
+
 class Field
 {
-    char ***p;
+protected:
     short l, m;
+    short **p;
 
 public:
     Field():
-    p(0), l(0), m(0)
+        l(0), m(0), p(0)
     {
     }
     Field(short, short);
     ~Field();
 
-    void Draw();
     bool Game();
     short MinusLine();
-    short GetL();
-    short GetM();
-    char*** GetP();
+    short GetL() const;
+    short GetM() const;
+    short** GetP() const;
 };
 
 #endif
