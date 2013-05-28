@@ -495,5 +495,6 @@ int main()
     delete field;
     field=0;
     endwin();
+    clearScreen();
     return 0;
 }
