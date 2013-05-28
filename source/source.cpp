@@ -16,7 +16,7 @@ void clearScreen()
     system("clear");
 }
 
-int kbhit()
+int myKbhit()
 {
     struct termios oldt, newt;
     int ch;
@@ -43,7 +43,7 @@ int kbhit()
     return 0;
 }
 
-int getch()
+int myGetch()
 {
     struct termios oldt, newt;
     int ch;

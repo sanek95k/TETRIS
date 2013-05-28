@@ -3,8 +3,8 @@
 
 void nap(int);
 void clearScreen();
-int kbhit();
-int getch();
+int myKbhit();
+int myGetch();
 
 #endif
 

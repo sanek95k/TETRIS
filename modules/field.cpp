@@ -1,6 +1,8 @@
 #include "field.h"
 #include "source.h"
 
+using namespace cell;
+
 Field::Field(short x, short y):
     l(x), m(y), p(0)
 {
@@ -24,15 +26,7 @@ Field::~Field()
     p=0;
 }
 
-bool Field::Game()
-{
-    for (short i=1; i<m-1; ++i)
-        if (p[1][i]!=empty)
-            return false;
-    return true;
-}
-
-short Field::MinusLine()
+short Field::KillLine()
 {
     short score=0;
     for (short i1=l-2; i1>0; --i1)
@@ -57,16 +51,12 @@ short Field::MinusLine()
     return score;
 }
 
-short Field::GetL() const
+void Field::ClearField()
 {
-    return l;
+    for (short i=1; i<l-1; ++i)
+        for (short j=1; j<m-1; ++j)
+            p[i][j]=empty;
 }
-
-short Field::GetM() const
-{
-    return m;
-}
-
 short** Field::GetP() const
 {
     return p;

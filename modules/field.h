@@ -4,18 +4,23 @@
 #include "block.h"
 #include <iostream>
 
+namespace cell
+{
 enum Cell
 {
-    empty, full, border
+    empty, border, green, yellow, red, blue, white, magenta, cyan
 };
+}
 
 class Field
 {
 protected:
+
     short l, m;
     short **p;
 
 public:
+
     Field():
         l(0), m(0), p(0)
     {
@@ -23,10 +28,8 @@ public:
     Field(short, short);
     ~Field();
 
-    bool Game();
-    short MinusLine();
-    short GetL() const;
-    short GetM() const;
+    short KillLine();
+    void ClearField();
     short** GetP() const;
 };
 

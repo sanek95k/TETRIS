@@ -1,17 +1,25 @@
 #include "field.h"
+
 #include "square.h"
 #include "line.h"
 #include "stairleft.h"
 #include "stairright.h"
+#include "pedestal.h"
+#include "cornerleft.h"
+#include "cornerright.h"
+#include "testfigure.h"
+
 #include "source.h"
 #include <cstdlib>
 #include <iostream>
 
+using namespace cell;
 using namespace std;
 
 class ConField: public Field
 {
 public:
+
     ConField(short a,short b):
         Field(a,b)
     {
@@ -28,18 +36,12 @@ void ConField::Draw()
     {
         for (short j=0; j<m; ++j)
         {
-            switch(p[i][j])
-            {
-            case empty:
+            if (p[i][j]==empty)
                 cout<<"  ";
-                break;
-            case full:
-                cout<<"\356\202\252 ";
-                break;
-            case border:
+            else if (p[i][j]==border)
                 cout<<"\342\226\222"<<"\342\226\222";
-                break;
-            }
+            else
+                cout<<"\356\202\252 ";
         }
         cout<<endl;
     }
@@ -49,36 +51,58 @@ void ConField::Draw()
 
 int main()
 {
-    /*cout<<" Консольный тетрис (пока что недотетрис), БЕЗ защиты от глупостей\n";
+    cout<<" Консольный тетрис\n";
     cout<<"Управление фигурой:\n'a' - влево\n'd' - вправо\n";
     cout<<"'s' - быстро вниз\n'r' - повернуть\n'x' - выход\n\n";
-    nap(1000);*/
-    short figures=4;
-    short pause=400;
-    short height=22, width=16;
-    srand(time(0));
+    cout<<"Выберите уровень сложности (1-10):\n";
+
+    short pause=0;
+    cin>>pause;
+    if (!(pause>0&&pause<11))
+        pause=3;
+    pause=800*1/pause;
+
+    //short figures=8;
+    short figures=7;
+    short height=22, width=14;
+    short centerX=1, centerY=width/2-1;
     short score=0, bestScore=0;
     bool exit=false;
-    Block *figure[figures];
+
     ConField *field=new ConField(height, width);
+
+    Block *figure[figures];
+    figure[0]=new Square(centerX, centerY);
+    figure[1]=new Line(centerX, centerY);
+    figure[2]=new StairLeft(centerX, centerY);
+    figure[3]=new StairRight(centerX, centerY);
+    figure[4]=new Pedestal (centerX, centerY);
+    figure[5]=new CornerLeft (centerX, centerY);
+    figure[6]=new CornerRight (centerX, centerY);
+    //figure[7]=new TestFigure (centerX, centerY);
+
     char choice=1;
-    while(field->Game()&&!exit)
+    srand(time(0));
+
+    while(!exit)
     {
-        figure[0]=new Square(1,width/2-1);
-        figure[1]=new Line(1,width/2-1);
-        figure[2]=new StairLeft(1,width/2-1);
-        figure[3]=new StairRight(1,width/2-1);
         short whatFig=rand()%figures;
         while(!exit)
         {
-            figure[whatFig]->Enter(field);
+            if (!figure[whatFig]->Enter(field))
+            {
+                exit=true;
+                continue;
+            }
             clearScreen();
             field->Draw();
+
             if (figure[whatFig]->StopDown(field))
                 break;
             figure[whatFig]->Clear(field);
-            if(kbhit())
-                choice=getch();
+
+            if(myKbhit())
+                choice=myGetch();
             switch (choice)
             {
             case 1:
@@ -100,7 +124,8 @@ int main()
                 figure[whatFig]->MoveDown();
                 break;
             case 'r':
-                figure[whatFig]->Rotate(field);
+                if (!figure[whatFig]->StopRotate(field))
+                    figure[whatFig]->Rotate();
                 choice=1;
                 break;
             case 'x':
@@ -112,22 +137,28 @@ int main()
             }
         }
         choice=1;
-        short temp=field->MinusLine();
+
+        short temp=field->KillLine();
         if (temp>bestScore)
             bestScore=temp;
         score+=temp;
-        for (short i=0; i<figures; ++i)
-        {
-            delete  figure[i];
-            figure[i]=0;
-        }
-        *figure=0;
+
+        figure[whatFig]->ToDefault(centerX, centerY);
 
     }
-    /*cout<<"\n Итоги:\n";
-    cout<<"Всего "<<score<<" линий\n";
-    cout<<"Наибольшее число линий за один раз: "<<bestScore<<" линий\n";*/
+
+    for (short i=0; i<figures; ++i)
+    {
+        delete  figure[i];
+        figure[i]=0;
+    }
+    *figure=0;
     delete field;
     field=0;
+
+    cout<<"\n Итоги:\n";
+    cout<<"Всего "<<score<<" линий\n";
+    cout<<"Наибольшее число линий за один раз: "<<bestScore<<" линий\n";
+
     return 0;
 }

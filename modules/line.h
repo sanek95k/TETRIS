@@ -6,13 +6,10 @@
 class Line: public Block
 {
 public:
+
     Line(short, short);
     ~Line();
 
-    void Rotate(Field *);
-    bool StopDown(Field *);
-    bool StopLeft(Field *);
-    bool StopRight(Field *);
 };
 
 #endif
