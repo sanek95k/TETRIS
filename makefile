@@ -1,13 +1,11 @@
 # tetris
 
-tetris: main.o block.o field.o source.o square.o line.o stairleft.o 
-stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o -lncursesw
+tetris: main.o block.o field.o source.o square.o line.o stairleft.o stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o
 
-	g++ -o tetris main.o block.o field.o source.o square.o line.o stairleft.o 
-stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o -lncursesw
+	g++ -o bin/tetris main.o block.o field.o source.o square.o line.o stairleft.o stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o -lncursesw
 
-main.o: main.cpp
-	g++ -c main.cpp
+main.o: ncurses_interface/main.cpp
+	g++ -c ncurses_interface/main.cpp
 
 block.o: block.cpp
 	g++ -c block.cpp
