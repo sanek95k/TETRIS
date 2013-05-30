@@ -1,44 +1,49 @@
 # tetris
 
 tetris: main.o block.o field.o source.o square.o line.o stairleft.o stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o
-
 	g++ -o bin/tetris main.o block.o field.o source.o square.o line.o stairleft.o stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o -lncursesw
+
+tetris_simple: main_simple.o block.o field.o source.o square.o line.o stairleft.o stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o
+	g++ -o bin/tetris_simple main_simple.o block.o field.o source.o square.o line.o stairleft.o stairright.o pedestal.o cornerleft.o cornerright.o testfigure.o
 
 main.o: ncurses_interface/main.cpp
 	g++ -c ncurses_interface/main.cpp
 
-block.o: block.cpp
-	g++ -c block.cpp
+main_simple.o: simple_interface/main.cpp
+	g++ -o main_simple.o -c simple_interface/main.cpp
 
-field.o: field.cpp
-	g++ -c field.cpp
+block.o: modules/block.cpp
+	g++ -c modules/block.cpp
 
-source.o: source.cpp
-	g++ -c source.cpp
+field.o: modules/field.cpp
+	g++ -c modules/field.cpp
 
-square.o: square.cpp
-	g++ -c square.cpp
+source.o: source/source.cpp
+	g++ -c source/source.cpp
 
-line.o: line.cpp
-	g++ -c line.cpp
+square.o: modules/square.cpp
+	g++ -c modules/square.cpp
 
-stairleft.o: stairleft.cpp
-	g++ -c stairleft.cpp
+line.o: modules/line.cpp
+	g++ -c modules/line.cpp
 
-stairright.o: stairright.cpp
-	g++ -c stairright.cpp
+stairleft.o: modules/stairleft.cpp
+	g++ -c modules/stairleft.cpp
 
-pedestal.o: pedestal.cpp
-	g++ -c pedestal.cpp
+stairright.o: modules/stairright.cpp
+	g++ -c modules/stairright.cpp
 
-cornerleft.o: cornerleft.cpp
-	g++ -c cornerleft.cpp
+pedestal.o: modules/pedestal.cpp
+	g++ -c modules/pedestal.cpp
 
-cornerright.o: cornerright.cpp
-	g++ -c cornerright.cpp
+cornerleft.o: modules/cornerleft.cpp
+	g++ -c modules/cornerleft.cpp
 
-testfigure.o: testfigure.cpp
-	g++ -c testfigure.cpp
+cornerright.o: modules/cornerright.cpp
+	g++ -c modules/cornerright.cpp
+
+testfigure.o: modules/testfigure.cpp
+	g++ -c modules/testfigure.cpp
 
 clean:
 	rm -f *.o tetris
