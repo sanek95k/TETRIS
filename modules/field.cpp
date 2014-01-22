@@ -1,5 +1,5 @@
 #include "field.h"
-#include "source.h"
+//s#include "../source/source.h"
 
 using namespace cell;
 
@@ -57,6 +57,7 @@ void Field::ClearField()
         for (short j=1; j<m-1; ++j)
             p[i][j]=empty;
 }
+
 short** Field::GetP() const
 {
     return p;

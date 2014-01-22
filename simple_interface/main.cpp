@@ -1,15 +1,15 @@
-#include "field.h"
+#include "../modules/field.h"
 
-#include "square.h"
-#include "line.h"
-#include "stairleft.h"
-#include "stairright.h"
-#include "pedestal.h"
-#include "cornerleft.h"
-#include "cornerright.h"
-#include "testfigure.h"
+#include "../modules/square.h"
+#include "../modules/line.h"
+#include "../modules/stairleft.h"
+#include "../modules/stairright.h"
+#include "../modules/pedestal.h"
+#include "../modules/cornerleft.h"
+#include "../modules/cornerright.h"
+#include "../modules/testfigure.h"
 
-#include "source.h"
+#include "../source/source.h"
 #include <cstdlib>
 #include <iostream>
 
